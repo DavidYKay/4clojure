@@ -1,9 +1,8 @@
 (defn my-filter [s]
   (->> (clojure.string/split s #",")
        (map #(Integer/parseInt %))
-       (filter #(==
-                 (Math/sqrt %)
-                 (int (Math/sqrt %))))
+       (filter #(== (Math/sqrt %)
+                    (int (Math/sqrt %))))
        (clojure.string/join ",")))
 
 (=
