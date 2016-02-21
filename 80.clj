@@ -1,9 +1,8 @@
 (ns user)
 
 (defn perfect? [n]
-  (= (apply + 
-            (filter #(= 0 (mod n %))
-                    (range 1 n)))
+  (= (apply + (filter #(= 0 (mod n %))
+                      (range 1 n)))
      n))
 
 (= (perfect? 6) true)
