@@ -26,24 +26,27 @@
 (defn mean [& args]
     (/ (apply + (remove nil? args)) (count args)))
 
-(defn prime-before [x]
-  (first (last (filter #(= true (last %)) (primes x)))))
+(defn prime-before [x primes]
+  (first (last (filter #(and
+                         (< (first %) x)
+                         (= true (last %))) primes))))
 
-(defn prime-after [x]
+(defn prime-after [x primes]
   (ffirst (filter (fn [[i b]]
                    (and (> i x)
-                       (= true b))) (primes (* 2 x)))))
+                       (= true b))) primes)))
 
-(defn prime? [x]
+(defn prime? [x primes]
   (last (first (filter #(= x (first %))
-                       (primes (inc x))))))
+                       primes))))
 
 (defn balanced?
   "A balanced prime is a prime number which is also the mean of the primes directly before and after it in the sequence of valid primes. Create a function which takes an integer n, and returns true iff it is a balanced prime."
   [x]
-  (and (prime? x)
-       (= x (mean (prime-before x)
-                  (prime-after x)))))
+  (let [primes (primes (* 2 x))]
+    (and (prime? x primes)
+         (= x (mean (prime-before x primes)
+                    (prime-after x primes))))))
 
 (= false (balanced? 4))
 (= true (balanced? 563))
