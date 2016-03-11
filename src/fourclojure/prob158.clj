@@ -2,9 +2,4 @@
 
 (defn decurry [f]
   (fn [& args]
-    (loop [args args
-           f f]
-      (if (empty? args)
-        f
-        (recur (rest args)
-               (f (first args)))))))
+    (reduce #(%1 %2) f args)))
