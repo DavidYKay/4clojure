@@ -8,5 +8,4 @@
        (group-by first)
        (map (fn [[k vs]]
               [k (reduce f (map last vs))]))
-       (flatten)
-       (apply hash-map)))
+       (into {})))
