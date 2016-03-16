@@ -1,17 +1,16 @@
 (ns fourclojure.prob85)
 
-(def results (atom #{}))
-
-(defn backtrack [current remaining]
-  (when (not (contains? @results current))
-    (swap! results conj current)
-    (doseq [x remaining]
-      (backtrack (conj current x) (disj remaining x)))))
 
 (defn power-set [s]
-  (reset! results #{})
-  (backtrack #{} s)
-  @results)
+  (def results (atom #{}))
+  (letfn [(backtrack [current remaining]
+            (when (not (contains? @results current))
+              (swap! results conj current)
+              (doseq [x remaining]
+                (backtrack (conj current x) (disj remaining x)))))]
+    (reset! results #{})
+    (backtrack #{} s)
+    @results))
 
   ;;(for [x s]
   ;;  (rpower-set #{x} (disj s x))))
