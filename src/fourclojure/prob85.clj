@@ -23,7 +23,8 @@
 
 (defn power-set [s]
   (reduce
-   (fn [a x] (into a (map #(conj % x) a)))
+   (fn [a x]
+     (into a (map #(conj % x) a)))
    #{#{}} s))
 
 
